@@ -89,11 +89,10 @@ class Query(graphene.ObjectType):
                     from core import datetime
                     now = datetime.datetime.now()
                     uuids = PolicyHolderUser.objects.filter(
-                        Q(user_id=info.context.user.id)
-                    ).filter(
-                        Q(date_valid_from__lte=now),
                         Q(date_valid_to__isnull=True) | Q(date_valid_to__gte=now),
-                        Q(is_deleted=False)
+                        is_deleted=False,
+                        user_id=info.context.user.id,
+                        date_valid_from__lte=now,
                     ).values_list('policy_holder', flat=True).distinct()
 
                     if uuids:
