@@ -3,6 +3,7 @@ import graphene_django_optimizer as gql_optimizer
 
 from django.db.models import Q
 from core.schema import OrderedDjangoFilterConnectionField, signal_mutation_module_validate
+from core.services import wait_for_mutation
 from core.utils import append_validity_filter
 from location.services import get_ancestor_location_filter
 from policyholder.models import PolicyHolder, PolicyHolderInsuree, PolicyHolderUser, \
@@ -109,6 +110,7 @@ class Query(graphene.ObjectType):
 
         client_mutation_id = kwargs.pop("clientMutationId", None)
         if client_mutation_id:
+            wait_for_mutation(client_mutation_id)
             filters.append(Q(mutations__mutation__client_mutation_id=client_mutation_id))
 
         parent_location = kwargs.get('parent_location')
