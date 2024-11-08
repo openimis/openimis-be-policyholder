@@ -3,7 +3,7 @@ import graphene_django_optimizer as gql_optimizer
 
 from django.db.models import Q
 from core.schema import OrderedDjangoFilterConnectionField, signal_mutation_module_validate
-from core.service import wait_for_mutation
+from core.services import wait_for_mutation
 from core.utils import append_validity_filter
 from location.services import get_ancestor_location_filter
 from policyholder.models import PolicyHolder, PolicyHolderInsuree, PolicyHolderUser, \
@@ -64,7 +64,7 @@ class Query(graphene.ObjectType):
         dateValidFrom__Gte=graphene.DateTime(),
         dateValidTo__Lte=graphene.DateTime(),
         applyDefaultValidityFilter=graphene.Boolean()
-    )from core.service import wait_for_mutation
+    )from core.services import wait_for_mutation
 specified policy holder code is unique."
     )
 
