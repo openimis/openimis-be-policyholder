@@ -64,8 +64,11 @@ class Query(graphene.ObjectType):
         dateValidFrom__Gte=graphene.DateTime(),
         dateValidTo__Lte=graphene.DateTime(),
         applyDefaultValidityFilter=graphene.Boolean()
-    )from core.services import wait_for_mutation
-specified policy holder code is unique."
+    )
+    validate_policy_holder_code = graphene.Field(
+        graphene.Boolean,
+        policy_holder_code=graphene.String(required=True),
+        description="Checks that the specified policy holder code is unique."
     )
 
     def resolve_validate_policy_holder_code(self, info, **kwargs):
