@@ -77,7 +77,7 @@ class Query(graphene.ObjectType):
         errors = PolicyHolderServices.check_unique_code_policy_holder(code=kwargs['policy_holder_code'])
         return False if errors else True
 
-
+    def resolve_policy_holder(self, info, **kwargs):
         if not info.context.user.has_perms(PolicyholderConfig.gql_query_policyholder_perms):
             raise PermissionDenied(_("unauthorized"))
         filters = []
