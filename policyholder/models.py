@@ -192,3 +192,10 @@ class PolicyHolderUserMutation(core_models.UUIDModel):
     class Meta:
         managed = True
         db_table = "policy_holder_user_PolicyHolderUserMutation"
+
+
+def has_hybrid_phu_perms(user, ph, perms):
+    if  user.has_perms(perms):
+        #TODO make cache
+        return PolicyHolderUser.objects.filter(policy_holder=ph, user=user).exists()
+    return false
